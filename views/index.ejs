@@ -5,7 +5,39 @@
     <link rel='stylesheet' href='/stylesheets/style.css' />
   </head>
   <body>
-    <h1>Ashraf Has Pizza For Every Meal</h1>
-    <p>Godbless</p>
+    <h2>Data Entry Page</h2>
+    <hr width="80%">
+    <p>Welcome to FitTracker! </br>To begin, please create a new category and enter in your data.</p>
+
+    <div id="new-category">
+      <form action="" method="">
+        <label for="category-name">Input new category</label>
+        <input type="text" name="category-name" placeholder="Eg: Body Weight" required>
+      </form>
+    </div>
+
+    <button type="enter-category">Enter</button>
+
+    <div id="data-entry">
+      <form action="" method="">
+        <label for="value">Value</label>
+        <input type="number" name="value" required>
+
+        <label for="unit">Unit</label>
+        <input type="text" name="unit" required>
+
+        <label for="date">Value</label>
+        <input type="number" name="date" placeholder="MMDDYYYY" required>
+      </form>
+    </div>
+
+    <button type="enter-data">Submit Data</button>
+
+    
+    <div id="Footer">
+      <footer>
+        Team Ashraf has pizza for every meal
+      </footer>
+    </div>
   </body>
 </html>
