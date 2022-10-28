@@ -16,9 +16,10 @@
       <label for="category-name">Input new category</label>
       <input type="text" name="category-name" placeholder="Eg: Body Weight" required>
     </form>
+    <button type="button" id="newCategoryBtn">Enter</button>
   </div>
 
-  <button type="enter-category">Enter</button>
+  
 
 <div id="category-1">
     <p id="category-1-name">Category 1</p>
@@ -119,6 +120,21 @@
 </form>
 <button type="button" id="button6">Submit Data 6</button>
 </div>
+
+  <div id="Footer">
+    <footer>
+      Team Ashraf has pizza for every meal
+    </footer>
+  </div>
+  
+  <script>
+    function handleNewCategory(category){
+      document.getElementById("category-1-name").innerHTML = category;
+    }
+    document.getElementById("newCategoryBtn").addEventListener("click", handleNewCategory(document.getElementById("category-name").innerHTML));
+  </script>
+  
+</body>
 
 </body> 
 </html>
