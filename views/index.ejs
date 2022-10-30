@@ -126,7 +126,7 @@
     </footer>
   </div>
   
-  <script>
+  <script type="module" src="../javascripts/main.js">
     var timesClicked = 0;
     document.getElementById("newCategoryBtn").addEventListener("click", function() {
       if(timesClicked == 0){
@@ -157,9 +157,10 @@
         document.getElementById("category-input").disabled = true;
       }
     });
+
+    var userInput = document.getElementById("value1").value + ' ' + document.getElementById("unit1").value + ' ' + document.getElementById("date1").value;
+    document.getElementById("button1").addEventListener("click", uploadBlob("csds393stg", "test", "Category1", userInput));
   </script>
-  
-</body>
 
 </body> 
 </html>
