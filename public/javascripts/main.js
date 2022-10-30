@@ -1,8 +1,12 @@
 //helpful links
 //https://learn.microsoft.com/en-us/azure/app-service/tutorial-connect-app-access-storage-javascript?tabs=azure-portal
 //https://github.com/Azure-Samples/ms-identity-easyauth-nodejs-storage-graphapi/blob/main/1-WebApp-storage-managed-identity/utils/storageHelper.js
-const { DefaultAzureCredential } = require("@azure/identity");
-const { BlobServiceClient } = require("@azure/storage-blob");
+
+
+//const { DefaultAzureCredential } = require('../node_modules/@azure/identity');
+//const { BlobServiceClient } = require('../node_modules/@azure/storage-blob');
+import { DefaultAzureCredential } from '../node_modules/@azure/identity';
+import { BlobServiceClient } from '../node_modules/@azure/storage-blob';
 
 const defaultAzureCredential = new DefaultAzureCredential();
 
@@ -68,7 +72,10 @@ async function deleteBlob(accountName, containerName, blobName) {
 }
 
 async function uploadBlob(accountName, containerName, blobName, blobContents) {
-    const blobServiceClient = new BlobServiceClient(`https://${accountName}.blob.core.windows.net`,defaultAzureCredential);
+    const blobServiceClient = new BlobServiceClient(
+        `https://${accountName}.blob.core.windows.net`,
+        defaultAzureCredential
+    );
 
     const containerClient = blobServiceClient.getContainerClient(containerName);
 
