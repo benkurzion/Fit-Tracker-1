@@ -158,6 +158,11 @@
       }
     });
   </script>
+
+  <script src="Fit-Tracker-1/public/javascripts/main.js">
+    var userInput = document.getElementById("value1").value + ' ' + document.getElementById("unit1").value + ' ' + document.getElementById("date1").value;
+    document.getElementById("button1").addEventListener("click", uploadBlob("csds393stg", "test", "Category1", userInput));
+  </script>
   
 </body>
 

@@ -68,10 +68,7 @@ async function deleteBlob(accountName, containerName, blobName) {
 }
 
 async function uploadBlob(accountName, containerName, blobName, blobContents) {
-    const blobServiceClient = new BlobServiceClient(
-        `https://${accountName}.blob.core.windows.net`,
-        defaultAzureCredential
-    );
+    const blobServiceClient = new BlobServiceClient(`https://${accountName}.blob.core.windows.net`,defaultAzureCredential);
 
     const containerClient = blobServiceClient.getContainerClient(containerName);
 
