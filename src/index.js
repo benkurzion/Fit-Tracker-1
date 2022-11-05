@@ -5,15 +5,15 @@
 
 //const { DefaultAzureCredential } = require('../node_modules/@azure/identity');
 //const { BlobServiceClient } = require('../node_modules/@azure/storage-blob');
-import { DefaultAzureCredential } from '../node_modules/@azure/identity';
+import { InteractiveBrowserCredential } from '../node_modules/@azure/identity';
 import { BlobServiceClient } from '../node_modules/@azure/storage-blob';
 
-const defaultAzureCredential = new DefaultAzureCredential();
+const interactiveBrowserCredential = new InteractiveBrowserCredential();
 
 async function getBlobs(accountName, containerName) {
     const blobServiceClient = new BlobServiceClient(
         `https://${accountName}.blob.core.windows.net`,
-        defaultAzureCredential
+        interactiveBrowserCredential
     );
 
     const containerClient = blobServiceClient.getContainerClient(containerName);
@@ -58,7 +58,7 @@ async function getBlobs(accountName, containerName) {
 async function deleteBlob(accountName, containerName, blobName) {
     const blobServiceClient = new BlobServiceClient(
         `https://${accountName}.blob.core.windows.net`,
-        defaultAzureCredential
+        interactiveBrowserCredential
     );
 
     const containerClient = blobServiceClient.getContainerClient(containerName);
@@ -74,7 +74,7 @@ async function deleteBlob(accountName, containerName, blobName) {
 async function uploadBlob(accountName, containerName, blobName, blobContents) {
     const blobServiceClient = new BlobServiceClient(
         `https://${accountName}.blob.core.windows.net`,
-        defaultAzureCredential
+        interactiveBrowserCredential
     );
 
     const containerClient = blobServiceClient.getContainerClient(containerName);
