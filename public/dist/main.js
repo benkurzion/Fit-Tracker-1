@@ -7,7 +7,6 @@
  * If you are looking for production-ready output files, see mode: "production" (https://webpack.js.org/configuration/mode/).
  */
 /******/ (() => { // webpackBootstrap
-<<<<<<< HEAD
 /******/ 	var __webpack_modules__ = ({
 
 /***/ "./node_modules/@azure/abort-controller/dist-esm/src/AbortController.js":
@@ -3299,18 +3298,12 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpac
 
 /***/ }),
 
-=======
-/******/ 	"use strict";
-/******/ 	var __webpack_modules__ = ({
-
->>>>>>> e79af2022a91647d2b6f15be86cca0cc0417687d
 /***/ "./src/index.js":
 /*!**********************!*\
   !*** ./src/index.js ***!
   \**********************/
 /***/ ((module, __webpack_exports__, __webpack_require__) => {
 
-<<<<<<< HEAD
 "use strict";
 eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _node_modules_azure_identity__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../node_modules/@azure/identity */ \"./node_modules/@azure/identity/dist-esm/src/credentials/interactiveBrowserCredential.browser.js\");\n/* harmony import */ var _node_modules_azure_storage_blob__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../node_modules/@azure/storage-blob */ \"./node_modules/@azure/storage-blob/dist-esm/storage-blob/src/BlobServiceClient.js\");\n/* module decorator */ module = __webpack_require__.hmd(module);\n//helpful links\r\n//https://learn.microsoft.com/en-us/azure/app-service/tutorial-connect-app-access-storage-javascript?tabs=azure-portal\r\n//https://github.com/Azure-Samples/ms-identity-easyauth-nodejs-storage-graphapi/blob/main/1-WebApp-storage-managed-identity/utils/storageHelper.js\r\n\r\n\r\n//const { DefaultAzureCredential } = require('../node_modules/@azure/identity');\r\n//const { BlobServiceClient } = require('../node_modules/@azure/storage-blob');\r\n\r\n\r\n\r\nconst interactiveBrowserCredential = new _node_modules_azure_identity__WEBPACK_IMPORTED_MODULE_0__.InteractiveBrowserCredential(\r\n    {clientId: \"216761648543-kabnqh2crabg0h8e1seelj1evdjbjjll.apps.googleusercontent.com\"}\r\n);\r\n\r\nasync function getBlobs(accountName, containerName) {\r\n    const blobServiceClient = new _node_modules_azure_storage_blob__WEBPACK_IMPORTED_MODULE_1__.BlobServiceClient(\r\n        `https://${accountName}.blob.core.windows.net`,\r\n        interactiveBrowserCredential\r\n    );\r\n\r\n    const containerClient = blobServiceClient.getContainerClient(containerName);\r\n\r\n    try {\r\n        await containerClient.createIfNotExists();\r\n\r\n        let blobs = containerClient.listBlobsFlat();\r\n        let downloadedList = {};\r\n\r\n        for await (const blob of blobs) {\r\n            console.log(`${blob.name}`);\r\n\r\n            const blobClient = containerClient.getBlobClient(blob.name);\r\n\r\n            // Get blob content from position 0 to the end\r\n            // In Node.js, get downloaded data by accessing downloadBlockBlobResponse.readableStreamBody\r\n            const downloadBlockBlobResponse = await blobClient.download();\r\n\r\n            const downloaded = (\r\n                await streamToBuffer(downloadBlockBlobResponse.readableStreamBody)\r\n            ).toString();\r\n\r\n            console.log(\"Downloaded blob content:\", downloaded);\r\n\r\n            if (downloadedList[blob.name]) {\r\n                downloadedList[blob.name].push(downloaded);\r\n            } else {\r\n                downloadedList = {\r\n                    ...downloadedList,\r\n                    [blob.name]: [downloaded]\r\n                }\r\n            }\r\n        }\r\n\r\n        return downloadedList;\r\n    } catch (error) {\r\n        console.log(error);\r\n    }\r\n}\r\n\r\nasync function deleteBlob(accountName, containerName, blobName) {\r\n    const blobServiceClient = new _node_modules_azure_storage_blob__WEBPACK_IMPORTED_MODULE_1__.BlobServiceClient(\r\n        `https://${accountName}.blob.core.windows.net`,\r\n        interactiveBrowserCredential\r\n    );\r\n\r\n    const containerClient = blobServiceClient.getContainerClient(containerName);\r\n    const blobClient = containerClient.getBlobClient(blobName);\r\n\r\n    try {\r\n        await blobClient.deleteIfExists();\r\n    } catch (error) {\r\n        console.log(error);\r\n    }\r\n}\r\n\r\nasync function uploadBlob(accountName, containerName, blobName, blobContents) {\r\n    const blobServiceClient = new _node_modules_azure_storage_blob__WEBPACK_IMPORTED_MODULE_1__.BlobServiceClient(\r\n        `https://${accountName}.blob.core.windows.net`,\r\n        interactiveBrowserCredential\r\n    );\r\n\r\n    const containerClient = blobServiceClient.getContainerClient(containerName);\r\n\r\n    try {\r\n        await containerClient.createIfNotExists();\r\n        const blockBlobClient = containerClient.getBlockBlobClient(blobName);\r\n        const uploadBlobResponse = await blockBlobClient.upload(blobContents, blobContents.length);\r\n        console.log(`Upload block blob ${blobName} successfully`, uploadBlobResponse.requestId);\r\n    } catch (error) {\r\n        console.log(error);\r\n    }\r\n}\r\n\r\n// A helper method used to read a Node.js readable stream into a Buffer\r\nasync function streamToBuffer(readableStream) {\r\n    return new Promise((resolve, reject) => {\r\n        const chunks = [];\r\n        readableStream.on(\"data\", (data) => {\r\n            chunks.push(data instanceof Buffer ? data : Buffer.from(data));\r\n        });\r\n        readableStream.on(\"end\", () => {\r\n            resolve(Buffer.concat(chunks));\r\n        });\r\n        readableStream.on(\"error\", reject);\r\n    });\r\n}\r\n\r\nmodule.exports = {\r\n    getBlobs,\r\n    deleteBlob,\r\n    uploadBlob\r\n};\n\n//# sourceURL=webpack://myexpressapp/./src/index.js?");
 
@@ -3323,9 +3316,6 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _nod
 /***/ (() => {
 
 eval("/* (ignored) */\n\n//# sourceURL=webpack://myexpressapp/os_(ignored)?");
-=======
-eval("__webpack_require__.r(__webpack_exports__);\nObject(function webpackMissingModule() { var e = new Error(\"Cannot find module '../node_modules/@azure/identity'\"); e.code = 'MODULE_NOT_FOUND'; throw e; }());\nObject(function webpackMissingModule() { var e = new Error(\"Cannot find module '../node_modules/@azure/storage-blob'\"); e.code = 'MODULE_NOT_FOUND'; throw e; }());\n/* module decorator */ module = __webpack_require__.hmd(module);\n//helpful links\r\n//https://learn.microsoft.com/en-us/azure/app-service/tutorial-connect-app-access-storage-javascript?tabs=azure-portal\r\n//https://github.com/Azure-Samples/ms-identity-easyauth-nodejs-storage-graphapi/blob/main/1-WebApp-storage-managed-identity/utils/storageHelper.js\r\n\r\n\r\n//const { DefaultAzureCredential } = require('../node_modules/@azure/identity');\r\n//const { BlobServiceClient } = require('../node_modules/@azure/storage-blob');\r\n\r\n\r\n\r\nconst interactiveBrowserCredential = new Object(function webpackMissingModule() { var e = new Error(\"Cannot find module '../node_modules/@azure/identity'\"); e.code = 'MODULE_NOT_FOUND'; throw e; }())(\r\n    {clientId: \"216761648543-kabnqh2crabg0h8e1seelj1evdjbjjll.apps.googleusercontent.com\"}\r\n);\r\n\r\nasync function getBlobs(accountName, containerName) {\r\n    const blobServiceClient = new Object(function webpackMissingModule() { var e = new Error(\"Cannot find module '../node_modules/@azure/storage-blob'\"); e.code = 'MODULE_NOT_FOUND'; throw e; }())(\r\n        `https://${accountName}.blob.core.windows.net`,\r\n        interactiveBrowserCredential\r\n    );\r\n\r\n    const containerClient = blobServiceClient.getContainerClient(containerName);\r\n\r\n    try {\r\n        await containerClient.createIfNotExists();\r\n\r\n        let blobs = containerClient.listBlobsFlat();\r\n        let downloadedList = {};\r\n\r\n        for await (const blob of blobs) {\r\n            console.log(`${blob.name}`);\r\n\r\n            const blobClient = containerClient.getBlobClient(blob.name);\r\n\r\n            // Get blob content from position 0 to the end\r\n            // In Node.js, get downloaded data by accessing downloadBlockBlobResponse.readableStreamBody\r\n            const downloadBlockBlobResponse = await blobClient.download();\r\n\r\n            const downloaded = (\r\n                await streamToBuffer(downloadBlockBlobResponse.readableStreamBody)\r\n            ).toString();\r\n\r\n            console.log(\"Downloaded blob content:\", downloaded);\r\n\r\n            if (downloadedList[blob.name]) {\r\n                downloadedList[blob.name].push(downloaded);\r\n            } else {\r\n                downloadedList = {\r\n                    ...downloadedList,\r\n                    [blob.name]: [downloaded]\r\n                }\r\n            }\r\n        }\r\n\r\n        return downloadedList;\r\n    } catch (error) {\r\n        console.log(error);\r\n    }\r\n}\r\n\r\nasync function deleteBlob(accountName, containerName, blobName) {\r\n    const blobServiceClient = new Object(function webpackMissingModule() { var e = new Error(\"Cannot find module '../node_modules/@azure/storage-blob'\"); e.code = 'MODULE_NOT_FOUND'; throw e; }())(\r\n        `https://${accountName}.blob.core.windows.net`,\r\n        interactiveBrowserCredential\r\n    );\r\n\r\n    const containerClient = blobServiceClient.getContainerClient(containerName);\r\n    const blobClient = containerClient.getBlobClient(blobName);\r\n\r\n    try {\r\n        await blobClient.deleteIfExists();\r\n    } catch (error) {\r\n        console.log(error);\r\n    }\r\n}\r\n\r\nasync function uploadBlob(accountName, containerName, blobName, blobContents) {\r\n    const blobServiceClient = new Object(function webpackMissingModule() { var e = new Error(\"Cannot find module '../node_modules/@azure/storage-blob'\"); e.code = 'MODULE_NOT_FOUND'; throw e; }())(\r\n        `https://${accountName}.blob.core.windows.net`,\r\n        interactiveBrowserCredential\r\n    );\r\n\r\n    const containerClient = blobServiceClient.getContainerClient(containerName);\r\n\r\n    try {\r\n        await containerClient.createIfNotExists();\r\n        const blockBlobClient = containerClient.getBlockBlobClient(blobName);\r\n        const uploadBlobResponse = await blockBlobClient.upload(blobContents, blobContents.length);\r\n        console.log(`Upload block blob ${blobName} successfully`, uploadBlobResponse.requestId);\r\n    } catch (error) {\r\n        console.log(error);\r\n    }\r\n}\r\n\r\n// A helper method used to read a Node.js readable stream into a Buffer\r\nasync function streamToBuffer(readableStream) {\r\n    return new Promise((resolve, reject) => {\r\n        const chunks = [];\r\n        readableStream.on(\"data\", (data) => {\r\n            chunks.push(data instanceof Buffer ? data : Buffer.from(data));\r\n        });\r\n        readableStream.on(\"end\", () => {\r\n            resolve(Buffer.concat(chunks));\r\n        });\r\n        readableStream.on(\"error\", reject);\r\n    });\r\n}\r\n\r\nmodule.exports = {\r\n    getBlobs,\r\n    deleteBlob,\r\n    uploadBlob\r\n};\n\n//# sourceURL=webpack://myexpressapp/./src/index.js?");
->>>>>>> e79af2022a91647d2b6f15be86cca0cc0417687d
 
 /***/ })
 
@@ -3359,7 +3349,6 @@ eval("__webpack_require__.r(__webpack_exports__);\nObject(function webpackMissin
 /******/ 	}
 /******/ 	
 /************************************************************************/
-<<<<<<< HEAD
 /******/ 	/* webpack/runtime/compat get default export */
 /******/ 	(() => {
 /******/ 		// getDefaultExport function for compatibility with non-harmony modules
@@ -3396,8 +3385,6 @@ eval("__webpack_require__.r(__webpack_exports__);\nObject(function webpackMissin
 /******/ 		})();
 /******/ 	})();
 /******/ 	
-=======
->>>>>>> e79af2022a91647d2b6f15be86cca0cc0417687d
 /******/ 	/* webpack/runtime/harmony module decorator */
 /******/ 	(() => {
 /******/ 		__webpack_require__.hmd = (module) => {
@@ -3413,14 +3400,11 @@ eval("__webpack_require__.r(__webpack_exports__);\nObject(function webpackMissin
 /******/ 		};
 /******/ 	})();
 /******/ 	
-<<<<<<< HEAD
 /******/ 	/* webpack/runtime/hasOwnProperty shorthand */
 /******/ 	(() => {
 /******/ 		__webpack_require__.o = (obj, prop) => (Object.prototype.hasOwnProperty.call(obj, prop))
 /******/ 	})();
 /******/ 	
-=======
->>>>>>> e79af2022a91647d2b6f15be86cca0cc0417687d
 /******/ 	/* webpack/runtime/make namespace object */
 /******/ 	(() => {
 /******/ 		// define __esModule on exports
