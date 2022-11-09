@@ -8,7 +8,9 @@
 import { InteractiveBrowserCredential } from '../node_modules/@azure/identity';
 import { BlobServiceClient } from '../node_modules/@azure/storage-blob';
 
-const interactiveBrowserCredential = new InteractiveBrowserCredential();
+const interactiveBrowserCredential = new InteractiveBrowserCredential(
+    {clientId: "216761648543-kabnqh2crabg0h8e1seelj1evdjbjjll.apps.googleusercontent.com"}
+);
 
 async function getBlobs(accountName, containerName) {
     const blobServiceClient = new BlobServiceClient(
