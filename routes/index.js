@@ -14,7 +14,7 @@ const
 router.get('/', async(req, res, next) => {
   let viewData;
   try{
-      const blobs = new BlobContainerClient("UseDevelopmentStorage=true", "localfit").listBlobsFlat();
+      const blobs = blobServiceClient.getContainerClient(containerName).listBlobsFlat()
       viewData = {
         title: 'Home',
         viewName: 'index',
