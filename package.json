@@ -1,9 +1,14 @@
 {
-  "name": "myexpressapp",
-  "version": "0.0.0",
+  "name": "my-webpack-project",
+  "version": "1.0.0",
   "private": true,
   "scripts": {
-    "start": "node ./bin/www"
+    "start": "node ./bin/www",
+    "build": "webpack --mode=production --node-env=production",
+    "build:dev": "webpack --mode=development",
+    "build:prod": "webpack --mode=production --node-env=production",
+    "watch": "webpack --watch",
+    "serve": "webpack serve"
   },
   "dependencies": {
     "@azure/identity": "^3.0.0",
@@ -17,5 +22,18 @@
     "httpster": "^1.2.1",
     "morgan": "~1.9.1",
     "uuid": "^9.0.0"
-  }
+  },
+  "devDependencies": {
+    "@webpack-cli/generators": "^2.5.0",
+    "css-loader": "^6.7.1",
+    "html-webpack-plugin": "^5.5.0",
+    "mini-css-extract-plugin": "^2.6.1",
+    "prettier": "^2.7.1",
+    "source-map-loader": "^4.0.1",
+    "style-loader": "^3.3.1",
+    "webpack-cli": "^4.10.0",
+    "webpack-dev-server": "^4.11.1",
+    "workbox-webpack-plugin": "^6.5.4"
+  },
+  "description": "My webpack project"
 }
