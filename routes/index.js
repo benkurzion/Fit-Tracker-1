@@ -20,10 +20,10 @@ router.get('/', async(req, res, next) => {
         viewName: 'index',
         accountName: config.getStorageAccountName(),
         containerName: containerName,
-        localfit:[]
+        thumbnails:[]
       };
       for await(let blob of blobs){
-          viewData.localfit.push(blob);
+          viewData.thumbnails.push(blob);
       }
     
     }catch(err){
