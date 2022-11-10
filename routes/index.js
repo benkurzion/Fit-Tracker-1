@@ -7,7 +7,7 @@ const
     , router = express.Router()
     , { BlobServiceClient } = require("@azure/storage-blob")
     , blobServiceClient = BlobServiceClient.fromConnectionString(process.env.AZURE_STORAGE_CONNECTION_STRING)
-    , containerName = process.env.AZURE_STORAGE_CONTAINER_NAME
+    , containerName = process.env.localfittrack
     , config = require('../config')
 ;
 
@@ -20,10 +20,10 @@ router.get('/', async(req, res, next) => {
         viewName: 'index',
         accountName: config.getStorageAccountName(),
         containerName: containerName,
-        thumbnails:[]
+        localfit:[]
       };
       for await(let blob of blobs){
-          viewData.thumbnails.push(blob);
+          viewData.localfit.push(blob);
       }
     
     }catch(err){
