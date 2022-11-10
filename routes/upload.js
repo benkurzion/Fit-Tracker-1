@@ -12,7 +12,7 @@ const
 
     , { BlockBlobClient } = require('@azure/storage-blob')
     , getStream = require('into-stream')
-    , containerName = 'images'
+    , containerName = 'localfit'
 ;
 
 const handleError = (err, res) => {
