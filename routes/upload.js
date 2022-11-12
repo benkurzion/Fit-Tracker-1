@@ -25,6 +25,7 @@ const getBlobName = originalName => {
     return `${identifier}-${originalName}`;
 };
 
+// POST upload page
 router.post('/', uploadStrategy, (req, res) => {
 
     const

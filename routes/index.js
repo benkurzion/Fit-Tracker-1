@@ -9,7 +9,6 @@ const
     , blobServiceClient = BlobServiceClient.fromConnectionString(process.env.AZURE_STORAGE_CONNECTION_STRING)
     , containerName = process.env.AZURE_STORAGE_CONTAINER_NAME
     , config = require('../config')
-    , interactiveBrowserCredential = new InteractiveBrowserCredential({clientId: "216761648543-kabnqh2crabg0h8e1seelj1evdjbjjll.apps.googleusercontent.com"})
 ;
 
 // GET home page
