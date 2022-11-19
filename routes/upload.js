@@ -8,10 +8,9 @@ const
 
     , multer = require('multer')
     , inMemoryStorage = multer.memoryStorage()
-    , uploadStrategy = multer({ storage: inMemoryStorage }).single('image')
+    , uploadStrategy = multer({ storage: inMemoryStorage }).any('image')
 
     , { AppendBlobClient } = require('@azure/storage-blob')
-    //, getStream = require('into-stream')
     , containerName = process.env.AZURE_STORAGE_CONTAINER_NAME
 ;
 
@@ -27,66 +26,63 @@ const getBlobName = originalName => {
 
 // POST upload page
 router.post('/', uploadStrategy, (req, res) => {
-    var str;
-    const blobService1 = new AppendBlobClient(process.env.AZURE_STORAGE_CONNECTION_STRING,containerName,getBlobName('Category1'));
-    const blobService2 = new AppendBlobClient(process.env.AZURE_STORAGE_CONNECTION_STRING,containerName,getBlobName('Category2'));
-    const blobService3 = new AppendBlobClient(process.env.AZURE_STORAGE_CONNECTION_STRING,containerName,getBlobName('Category3'));
-    const blobService4 = new AppendBlobClient(process.env.AZURE_STORAGE_CONNECTION_STRING,containerName,getBlobName('Category4'));
-    const blobService5 = new AppendBlobClient(process.env.AZURE_STORAGE_CONNECTION_STRING,containerName,getBlobName('Category5'));
-    const blobService6 = new AppendBlobClient(process.env.AZURE_STORAGE_CONNECTION_STRING,containerName,getBlobName('Category6'));
-    blobService1.exists().then( (exists1) => {
-        if (!exists1) {
-            blobService1.create();str=req.body['category-name'][0]+'\n'+req.body['category-name'][1];
-            blobService1.appendBlock(str, str.length).then(()=>{res.render('success',{message: 'File uploaded to Azure Blob storage.'});}
-            ).catch((err)=>{if(err){handleError(err);return;}});
+    const blobService = [];
+    // Creates blob representing category 1
+    blobService.push(new AppendBlobClient(process.env.AZURE_STORAGE_CONNECTION_STRING,containerName,getBlobName('Category1')));
+    // Creates blobs representing categories 2 through 6
+    for(let i = 2; i <= 6; i++){
+        blobService.push(new AppendBlobClient(process.env.AZURE_STORAGE_CONNECTION_STRING,containerName,getBlobName('Category' + i)));
+    }
+    // Check if category 6 exists (if so, don't upload anything because all 6 categories have been entered)
+    blobService[5].exists().then(async(exists) => {
+        if(exists){
+            res.render('success', { 
+                message: 'You have already reached the maximum category limit.' 
+            });
         }
-        else {
-            blobService2.exists().then( (exists2) => {
-                if (!exists2) {
-                    blobService2.create();str=req.body['category-name'][0]+'\n'+req.body['category-name'][1];
-                    blobService2.appendBlock(str, str.length).then(()=>{res.render('success',{message: 'File uploaded to Azure Blob storage.'});}
-                    ).catch((err)=>{if(err){handleError(err);return;}});
+        else{
+            let str = req.body['category-name'][0]+'\n'+req.body['category-name'][1]+'\n';
+            // The creation of categorgy 1 (only if it does not exist) ------------------------------
+            await blobService[0].exists().then(async(exists) => {
+                // If category 1 does not exist, create it and then break
+                if(!exists){
+                    console.log('Category1 does not exist -> Create it.');
+                    blobService[0].create();
+                    blobService[0].appendBlock(str, str.length).then(()=>{})
+                    .catch((err)=>{if(err) {handleError(err);return;}});
                 }
-                else {
-                    blobService3.exists().then( (exists3) => {
-                        if (!exists3) {
-                            blobService3.create();str=req.body['category-name'][0]+'\n'+req.body['category-name'][1];
-                            blobService3.appendBlock(str, str.length).then(()=>{res.render('success',{message: 'File uploaded to Azure Blob storage.'});}
-                            ).catch((err)=>{if(err){handleError(err);return;}});
-                        }
-                        else {
-                            blobService4.exists().then( (exists4) => {
-                                if (!exists4) {
-                                    blobService4.create();str=req.body['category-name'][0]+'\n'+req.body['category-name'][1];
-                                    blobService4.appendBlock(str, str.length).then(()=>{res.render('success',{message: 'File uploaded to Azure Blob storage.'});}
-                                    ).catch((err)=>{if(err){handleError(err);return;}});
-                                }
-                                else {
-                                    blobService5.exists().then( (exists5) => {
-                                        if (!exists5) {
-                                            blobService5.create();str=req.body['category-name'][0]+'\n'+req.body['category-name'][1];
-                                            blobService5.appendBlock(str, str.length).then(()=>{res.render('success',{message: 'File uploaded to Azure Blob storage.'});}
-                                            ).catch((err)=>{if(err){handleError(err);return;}});
-                                        }
-                                        else {
-                                            blobService6.exists().then( (exists6) => {
-                                                if (!exists6) {
-                                                    blobService6.create();str=req.body['category-name'][0]+'\n'+req.body['category-name'][1];
-                                                    blobService6.appendBlock(str, str.length).then(()=>{res.render('success',{message: 'File uploaded to Azure Blob storage.'});}
-                                                    ).catch((err)=>{if(err){handleError(err);return;}});
-                                                }
-                                                else {
-                                                    res.render('success',{message: 'Maximum category upload already reached.'});
-                                                }
-                                            })
-                                        }
-                                    })
-                                }
-                            })
-                        }
-                    })
+                else{ // If category 1 does not exist, for each blob after one, only create it if the one before exists
+                    console.log('Category1 exists -> Create next available category.');
+                    for(var i = 5; i >= 0; i--)
+                    {
+                        await blobService[i].exists().then(async(exists) => {
+                            // If this category exists, create following category and append name & units
+                            if(exists){
+                                console.log('Category' + (i+1) + ' exists.');
+                                await blobService[i+1].exists().then(async(exists) => {
+                                    if(!exists){
+                                        console.log('Category' + (i+2) + ' does not exist -> Create it.');
+                                        await blobService[i+1].create();
+                                        await blobService[i+1].appendBlock(str, str.length).then(()=>{})
+                                        .catch((err)=>{if(err) {handleError(err);return;}});
+                                    }
+                                    else{
+                                        console.log('Category' + (i+2) + ' exists -> Don\'t overwrite it.');
+                                    }
+                                })
+                                .catch((err)=>{if(err) {handleError(err);return;}});
+                            }
+                            else{
+                                console.log('Category' + (i+1) + ' does not exist -> Check Category'+ (i) + '.');
+                            }
+                        })
+                        .catch((err)=>{if(err) {handleError(err);return;}})
+                    }
                 }
             })
+            res.render('success', { 
+                message: 'Your category has been stored successfully.' 
+            });
         }
     })
 });
